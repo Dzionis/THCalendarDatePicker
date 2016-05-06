@@ -253,6 +253,12 @@
     _dateHasItemsCallback = callback;
 }
 
+- (void)setClearControlButtons:(BOOL)dontShowButtons {
+  self.okBtn.hidden = dontShowButtons;
+  self.closeBtn.hidden = dontShowButtons;
+}
+
+
 #pragma mark - Callbacks
 
 - (void)semiModalDidHide:(NSNotification *)notification {

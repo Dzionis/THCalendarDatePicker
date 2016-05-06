@@ -115,4 +115,9 @@
  */
 - (void)setDateTitle:(NSString*)dateTitle;
 
+/*! Set hide control buttons
+ * \param dontShowButtons      should it be possible?
+ */
+- (void)setClearControlButtons:(BOOL)dontShowButtons;
+
 @end
