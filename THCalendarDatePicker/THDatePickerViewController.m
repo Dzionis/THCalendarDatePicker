@@ -307,10 +307,26 @@
   [formatter
       setCalendar:[NSCalendar
                       calendarWithIdentifier:NSCalendarIdentifierGregorian]];
-  [formatter setDateFormat:(_disableYearSwitch ? @"MMMM yyyy" : @"yyyy\nMMMM")];
+  [formatter
+      setDateFormat:(_disableYearSwitch ? @"MMMM, yyyy" : @"yyyy\nMMMM")];
   formatter.locale = [NSLocale currentLocale];
+
+  NSDateFormatter *yearFormatter = formatter.copy;
+  [yearFormatter setDateFormat:@"yyyy"];
+
   NSString *monthName = [formatter stringFromDate:self.firstOfCurrentMonth];
+  NSString *yearString =
+      [yearFormatter stringFromDate:self.firstOfCurrentMonth];
   self.monthLabel.text = monthName;
+
+  NSMutableAttributedString *attributedText =
+      self.monthLabel.attributedText.mutableCopy;
+  NSRange range = [monthName rangeOfString:yearString];
+  [attributedText addAttributes:@{
+    NSForegroundColorAttributeName : [UIColor grayColor]
+  }
+                          range:range];
+  self.monthLabel.attributedText = attributedText;
 
   if (self.dateTitle != nil && _allowClearDate == NO) {
     self.titleLabel.text = self.dateTitle;
@@ -327,6 +343,9 @@
                                             toDate:self.firstOfCurrentMonth
                                            options:0];
   [offsetComponents setDay:1];
+  // Disable prev date
+  self.prevYearBtn.hidden =
+      _daysInHistory && [date compare:[NSDate date]] == NSOrderedAscending;
   UIView *container = self.calendarDaysView;
   CGRect containerFrame = container.frame;
   int areaWidth = containerFrame.size.width;
@@ -418,10 +437,13 @@
       UILabel *dayLabel = [[UILabel alloc]
           initWithFrame:CGRectMake(curX, 0, dayWidth, fullSize.height)];
       dayLabel.textAlignment = NSTextAlignmentCenter;
-      dayLabel.font = [UIFont systemFontOfSize:12];
+      dayLabel.font = [UIFont fontWithName:@"OpenSans" size:12];
+      dayLabel.textColor = [UIColor colorWithRed:214.0 / 255.0
+                                           green:69.0 / 255.0
+                                            blue:115.0 / 255.0
+                                           alpha:1.0];
       [self.weekdaysView addSubview:dayLabel];
       dayLabel.text = [df stringFromDate:date];
-      dayLabel.textColor = [UIColor grayColor];
       date = [_calendar dateByAddingComponents:offsetComponents
                                         toDate:date
                                        options:0];
