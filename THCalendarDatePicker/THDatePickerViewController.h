@@ -7,46 +7,49 @@
 //  Copyright (c) 2014 3Bus. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
 #import <KNSemiModalViewController_hons82/UIViewController+KNSemiModal.h>
+#import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 
 #import "THDateDay.h"
 
 @class THDatePickerViewController;
 
-@protocol THDatePickerDelegate <NSObject>
+@protocol THDatePickerDelegate<NSObject>
 
--(void)datePickerDonePressed:(THDatePickerViewController *)datePicker;
--(void)datePickerCancelPressed:(THDatePickerViewController *)datePicker;
+- (void)datePickerDonePressed:(THDatePickerViewController *)datePicker;
+- (void)datePickerCancelPressed:(THDatePickerViewController *)datePicker;
 
 @optional
 
--(void)datePicker:(THDatePickerViewController *)datePicker selectedDate:(NSDate *)selectedDate;
--(void)datePicker:(THDatePickerViewController *)datePicker deselectedDate:(NSDate *)deselectedDate;
--(void)datePickerDidHide:(THDatePickerViewController *)datePicker;
+- (void)datePicker:(THDatePickerViewController *)datePicker
+      selectedDate:(NSDate *)selectedDate;
+- (void)datePicker:(THDatePickerViewController *)datePicker
+    deselectedDate:(NSDate *)deselectedDate;
+- (void)datePickerDidHide:(THDatePickerViewController *)datePicker;
 
 @end
 
-@interface THDatePickerViewController : UIViewController <THDateDayDelegate>
+@interface THDatePickerViewController : UIViewController<THDateDayDelegate>
 
-+(THDatePickerViewController *)datePicker;
++ (THDatePickerViewController *)datePicker;
 
-@property (strong, nonatomic) NSDate * date;
-@property (weak, nonatomic) id<THDatePickerDelegate> delegate;
-@property (strong, nonatomic) UIColor *selectedBackgroundColor;
-@property (strong, nonatomic) UIColor *currentDateColor;
-@property (strong, nonatomic) UIColor *currentDateColorSelected;
-@property (nonatomic) float autoCloseCancelDelay;
-@property (strong, nonatomic) NSTimeZone *dateTimeZone;
-@property (nonatomic, getter=isRounded) BOOL rounded;
-@property (nonatomic, getter=isHistoryFutureBasedOnInternal) BOOL historyFutureBasedOnInternal;
-@property (weak, nonatomic) IBOutlet UIView *toolbarBackgroundView;
-@property (nonatomic) float slideAnimationDuration;
-@property (strong, nonatomic) NSString* dateTitle;
-@property (strong, nonatomic) NSArray * selectedDates;
+@property(strong, nonatomic) NSDate *date;
+@property(weak, nonatomic) id<THDatePickerDelegate> delegate;
+@property(strong, nonatomic) UIColor *selectedBackgroundColor;
+@property(strong, nonatomic) UIColor *currentDateColor;
+@property(strong, nonatomic) UIColor *currentDateColorSelected;
+@property(nonatomic) float autoCloseCancelDelay;
+@property(strong, nonatomic) NSTimeZone *dateTimeZone;
+@property(nonatomic, getter=isRounded) BOOL rounded;
+@property(nonatomic, getter=isHistoryFutureBasedOnInternal)
+    BOOL historyFutureBasedOnInternal;
+@property(weak, nonatomic) IBOutlet UIView *toolbarBackgroundView;
+@property(nonatomic) float slideAnimationDuration;
+@property(strong, nonatomic) NSString *dateTitle;
+@property(strong, nonatomic) NSArray *selectedDates;
 
-- (void)setDateHasItemsCallback:(BOOL (^)(NSDate * date))callback;
+- (void)setDateHasItemsCallback:(BOOL (^)(NSDate *date))callback;
 
 /*! Enable Clear Date Button
  * \param allow should show "clear date" button
@@ -83,17 +86,20 @@
  */
 - (void)setDisableFutureSelection:(BOOL)disableFutureSelection;
 
-/*! Should it be possible to select dates in history up to a number of days (including today) or 0 if any date
+/*! Should it be possible to select dates in history up to a number of days
+ * (including today) or 0 if any date
  * \param daysInHistory how many days?
  */
 - (void)setDaysInHistorySelection:(NSUInteger)daysInHistory;
 
-/*! Should it be possible to select dates in future up to a number of days (including today) or 0 if any date
+/*! Should it be possible to select dates in future up to a number of days
+ * (including today) or 0 if any date
  * \param daysInFuture how many days?
  */
 - (void)setDaysInFutureSelection:(NSUInteger)daysInFuture;
 
-/*! Set the timeZone by name to be used. Valid timezones can be retrieved using [NSTimeZone knownTimeZoneNames]
+/*! Set the timeZone by name to be used. Valid timezones can be retrieved using
+ * [NSTimeZone knownTimeZoneNames]
  * \param the name of the timezone to be used
  * \return successful?
  */
@@ -113,7 +119,7 @@
 /*! Set calendar title
  * \param dateTitle     calendar title
  */
-- (void)setDateTitle:(NSString*)dateTitle;
+- (void)setDateTitle:(NSString *)dateTitle;
 
 /*! Set hide control buttons
  * \param dontShowButtons      should it be possible?
